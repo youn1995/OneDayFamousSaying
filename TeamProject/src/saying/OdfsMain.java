@@ -1,4 +1,4 @@
-package Saying;
+package saying;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
