@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="291.0" prefWidth="248.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField layoutX="91.0" layoutY="98.0" prefHeight="15.0" prefWidth="159.0">
+         <font>
+            <Font name="Serif Regular" size="13.0" />
+         </font>
+      </TextField>
+      <Label layoutX="16.0" layoutY="148.0" text="비밀번호" />
+      <Label layoutX="22.0" layoutY="103.0" text="아이디" textFill="#0d0d0d" />
+      <Button layoutX="58.0" layoutY="190.0" mnemonicParsing="false" text="로그인" />
+      <Button layoutX="156.0" layoutY="190.0" mnemonicParsing="false" text="회원가입" />
+      <ImageView fitHeight="286.0" fitWidth="236.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+      <PasswordField layoutX="91.0" layoutY="142.0" prefHeight="23.0" prefWidth="159.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </PasswordField>
+      <Label layoutX="21.0" layoutY="14.0" prefHeight="60.0" prefWidth="246.0" text="One" textFill="#ee640e">
+         <font>
+            <Font size="59.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
