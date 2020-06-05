@@ -1,4 +1,4 @@
-package Saying;
+package saying;
 
 public class UsersForm
 {
