@@ -1,0 +1,40 @@
+#GridPane {
+	-fx-background-image: url("/images/cat.gif");
+}
+
+#btn-effect {
+	-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0, 7), 10, 0, 5, 5);
+}
+
+#pront-text {
+	-fx-font-size: 33;
+	-fx-font-family: "Arial Black";
+	-fx-font-weight: bold;
+	-fx-text-fill: linear-gradient(to bottom, black, white)
+}
+
+#idField:focused {
+	-fx-focus-color: green;
+}
+
+#passwordField::focused {
+	-fx-focus-color: green;
+	-fx-text-background: black;
+}
+
+#loginButton:focused {
+	-fx-focus-color: green;
+	-fx-text-background: black;
+}
+
+#loginButton:hover {
+	-fx-text-background: black;
+}
+
+#passwordField:hover {
+	-fx-text-background: black;
+}
+
+#signupButton:focused {
+	-fx-focus-color: green;
+}

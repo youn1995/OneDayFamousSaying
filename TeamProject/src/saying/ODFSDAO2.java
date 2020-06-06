@@ -57,7 +57,6 @@ public class ODFSDAO2 {
 		String sql = "select f.list_id, f.name, f.content, count(*)"
 				+ "  ";
 		
-
 		return null;
 	}
 	
