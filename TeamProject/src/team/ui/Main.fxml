@@ -1,8 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane id="mainAnchorPane" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: skyblue;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Hyperlink layoutX="266.0" layoutY="8.0" text="Logout">
+         <font>
+            <Font name="Segoe Script" size="12.0" />
+         </font></Hyperlink>
+      <Hyperlink layoutX="193.0" layoutY="8.0" text="My Page">
+         <font>
+            <Font name="Segoe Script" size="12.0" />
+         </font></Hyperlink>
+      <Label layoutX="9.0" layoutY="61.0" text="title : ">
+         <font>
+            <Font name="Segoe Script" size="14.0" />
+         </font></Label>
+      <TextArea layoutX="3.0" layoutY="326.0" prefHeight="140.0" prefWidth="315.0" promptText="Write Your Story" />
+      <Button fx:id="btnMyList" layoutX="2.0" layoutY="468.0" mnemonicParsing="false" text="My List">
+         <font>
+            <Font name="Segoe Script" size="12.0" />
+         </font></Button>
+      <Button fx:id ="btnUpload" layoutX="256.0" layoutY="467.0" mnemonicParsing="false" text="Upload">
+         <font>
+            <Font name="Segoe Script" size="12.0" />
+         </font></Button>
+      <Label layoutX="8.0" layoutY="97.0" text="Content">
+         <font>
+            <Font name="Segoe Script" size="14.0" />
+         </font></Label>
+      <Label layoutX="16.0" layoutY="12.0" prefHeight="26.0" prefWidth="55.0" text="Date : ">
+         <font>
+            <Font name="Segoe Script" size="14.0" />
+         </font></Label>
+      <Label layoutX="64.0" layoutY="12.0" prefHeight="26.0" prefWidth="104.0" text="2020/06/20">
+         <font>
+            <Font name="Segoe Script" size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="56.0" layoutY="63.0" prefHeight="23.0" prefWidth="264.0" />
+      <Separator layoutX="260.0" layoutY="8.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="5.0" />
+   </children>
 </AnchorPane>
-
