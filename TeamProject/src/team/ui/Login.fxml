@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="300.0"
+<AnchorPane id="pane" prefHeight="500.0" prefWidth="300.0"
 	style="-fx-background-color: skyblue;"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
@@ -20,17 +20,17 @@
 			prefWidth="200.0"
 			style="-fx-background-color: white; -fx-background-radius: 40;">
 			<children>
-				<Button layoutX="65.0" layoutY="134.0"
+				<Button fx:id="buttonSignin" layoutX="65.0" layoutY="134.0"
 					mnemonicParsing="false" prefHeight="23.0" prefWidth="103.0"
 					text="Sign in" />
-				<TextField PromptText="id" alignment="CENTER"
+				<TextField fx:id="textid" PromptText="id" alignment="CENTER"
 					layoutX="31.0" layoutY="48.0" style="-fx-background-radius: 30;" />
-				<PasswordField PromptText="password"
+				<PasswordField fx:id="textpassword" PromptText="password"
 					alignment="CENTER" layoutX="31.0" layoutY="89.0"
 					style="-fx-background-radius: 30;" />
 			</children>
 		</Pane>
-		<Button layoutX="148.0" layoutY="395.0" mnemonicParsing="false"
+		<Button fx:id="buttonSignup" layoutX="148.0" layoutY="395.0" mnemonicParsing="false"
 			prefHeight="23.0" prefWidth="103.0" text="Sign up" />
 		<Label layoutX="66.0" layoutY="102.0" text="User Login"
 			textFill="WHITE">
