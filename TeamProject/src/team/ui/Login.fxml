@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<AnchorPane prefHeight="500.0" prefWidth="300.0"
+	style="-fx-background-color: skyblue;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<Label prefHeight="36.0" prefWidth="178.0" text="Kakao Diary"
+			textFill="WHITE">
+			<font>
+				<Font name="Segoe Script" size="25.0" />
+			</font>
+		</Label>
+		<Pane layoutX="51.0" layoutY="165.0" prefHeight="200.0"
+			prefWidth="200.0"
+			style="-fx-background-color: white; -fx-background-radius: 40;">
+			<children>
+				<Button layoutX="65.0" layoutY="134.0"
+					mnemonicParsing="false" prefHeight="23.0" prefWidth="103.0"
+					text="Sign in" />
+				<TextField PromptText="id" alignment="CENTER"
+					layoutX="31.0" layoutY="48.0" style="-fx-background-radius: 30;" />
+				<PasswordField PromptText="password"
+					alignment="CENTER" layoutX="31.0" layoutY="89.0"
+					style="-fx-background-radius: 30;" />
+			</children>
+		</Pane>
+		<Button layoutX="148.0" layoutY="395.0" mnemonicParsing="false"
+			prefHeight="23.0" prefWidth="103.0" text="Sign up" />
+		<Label layoutX="66.0" layoutY="102.0" text="User Login"
+			textFill="WHITE">
+			<font>
+				<Font name="Segoe Script" size="30.0" />
+			</font>
+		</Label>
+	</children>
 </AnchorPane>
-
