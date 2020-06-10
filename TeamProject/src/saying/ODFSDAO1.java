@@ -8,13 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 
-public class ODFSDAO2 {
 
-	@FXML TextField idfield;
-	@FXML TextField passwordifeld;
+public class ODFSDAO1 {
+
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 
@@ -73,17 +70,6 @@ public class ODFSDAO2 {
 		
 	}
 	
-	public idButton(ActionEvnet event) throw Exception{//로그인버튼
-		if(txtUserName.getText().equals("user") && txtPassword.getText().equals("pass")){
-            lblStatus.setText("Login Success");
-            Stage primaryStage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/saying/OdfsMain.fxml"));
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        }else{
-            lblStatus.setText("Login Failed");
-        }
-    }
 
+
+}
