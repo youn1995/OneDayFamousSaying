@@ -6,13 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="mainAnchorPane" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: skyblue;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="mainAnchorPane" prefHeight="500.0" prefWidth="300.0" 
+style="-fx-background-color: skyblue;" stylesheets="@../css/style.css" 
+xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="team.control.MainController">
    <children>
-      <Hyperlink layoutX="266.0" layoutY="8.0" text="Logout">
+      <Hyperlink fx:id="hyLinkLogout" layoutX="266.0" layoutY="8.0" text="Logout">
          <font>
             <Font name="Segoe Script" size="12.0" />
          </font></Hyperlink>
-      <Hyperlink layoutX="193.0" layoutY="8.0" text="My Page">
+      <Hyperlink fx:id="hyLinkMyPage" layoutX="193.0" layoutY="8.0" text="My Page">
          <font>
             <Font name="Segoe Script" size="12.0" />
          </font></Hyperlink>
@@ -20,7 +23,7 @@
          <font>
             <Font name="Segoe Script" size="14.0" />
          </font></Label>
-      <TextArea layoutX="3.0" layoutY="326.0" prefHeight="140.0" prefWidth="315.0" promptText="Write Your Story" />
+      <TextArea txtAreaContent layoutX="3.0" layoutY="326.0" prefHeight="140.0" prefWidth="315.0" promptText="Write Your Story" />
       <Button fx:id="btnMyList" layoutX="2.0" layoutY="468.0" mnemonicParsing="false" text="My List">
          <font>
             <Font name="Segoe Script" size="12.0" />
@@ -37,12 +40,12 @@
          <font>
             <Font name="Segoe Script" size="14.0" />
          </font></Label>
-      <Label layoutX="64.0" layoutY="12.0" prefHeight="26.0" prefWidth="104.0" text="2020/06/20">
+      <Label fx:id="labDate" layoutX="64.0" layoutY="12.0" prefHeight="26.0" prefWidth="104.0" text="2020/06/20">
          <font>
             <Font name="Segoe Script" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="56.0" layoutY="63.0" prefHeight="23.0" prefWidth="264.0" />
+      <TextField fx:id="txtFieldTitle" layoutX="56.0" layoutY="63.0" prefHeight="23.0" prefWidth="264.0" />
       <Separator layoutX="260.0" layoutY="8.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="5.0" />
    </children>
 </AnchorPane>
