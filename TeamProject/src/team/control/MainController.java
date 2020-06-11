@@ -220,7 +220,7 @@ public class MainController implements Initializable {
 	 
 	            @Override
 	            public void handle(ActionEvent event) {
-	            	System.out.println("sss");
+//	            	addStage.close();
 	            }
 	        });
 	        MenuItem item2 = new MenuItem("삭제");

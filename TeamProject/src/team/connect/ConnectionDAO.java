@@ -119,5 +119,9 @@ public class ConnectionDAO
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteUserDiary(int userId, int listId) {
+		
+	}
 
 }
