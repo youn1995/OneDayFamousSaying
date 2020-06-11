@@ -1,5 +1,6 @@
 package team.control;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -7,7 +8,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -48,8 +51,22 @@ public class LoginController implements Initializable
 			messageDialog("아이디/비밀번호 입력 오류");
 			return;
 		}
-		Platform.exit();
-		//signup창으로 넘어가게 만들어주기
+//		Platform.exit();
+//		Stage nextStage = new Stage(StageStyle.UTILITY);
+//		nextStage.initModality(Modality.WINDOW_MODAL);
+//		nextStage.initOwner(buttonSignin.getScene().getWindow());
+		
+//		try
+//		{
+////			Parent parent = FXMLLoader.load(getClass().getResource("ui/Main.fxml"));
+////			Scene scene = new Scene(parent);
+////			nextStage.setScene(scene);
+////			nextStage.setResizable(false);
+////			nextStage.show();
+//		}catch(IOException e){
+//			e.printStackTrace();
+//		}
+//		
 		
 		
 	}

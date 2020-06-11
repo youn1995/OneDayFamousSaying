@@ -14,6 +14,7 @@ import team.data.Diary;
 
 public class ConnectionDAO {
 
+	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -34,7 +35,7 @@ public class ConnectionDAO {
 		}
 		return conn;
 	}
-
+	
 	public int login(String loginid, String password)
 	{
 		try
@@ -43,6 +44,7 @@ public class ConnectionDAO {
 			String sql = "select count(*) as check " + " from diary_user "
 					+ " where login_id ='" + loginid + "'" + " and password= '"
 					+ password + "'";
+			conn = getConnect();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
