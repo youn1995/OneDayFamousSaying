@@ -37,8 +37,9 @@ public class ConnectionDAO
 		return conn;
 	}
 
-	public int login(String loginid, String password)
+	public User login(String loginid, String password)
 	{
+		User userinfo = null;
 		try
 		{
 
@@ -52,7 +53,7 @@ public class ConnectionDAO
 			{
 				if (rs.getInt("CNT") == 0)
 				{
-					return 0;
+					return null;
 				}
 			}
 			sql = "select *" + " from diary_user " + " where login_id ='" + loginid + "'" + " and user_password= '"
@@ -63,15 +64,15 @@ public class ConnectionDAO
 			{
 				User user = new User(rs.getInt("user_id"), rs.getString("login_id"), rs.getString("user_name"),
 				rs.getString("user_password"));
-				
+				userinfo = user;
 			}
-			return 1;
+			return userinfo;
 			
 		} catch (SQLException e )
 		{
 			e.printStackTrace();
 			
-			return 0;
+			return null;
 		}
 	}
 

@@ -52,16 +52,22 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		changeDate();
-
-		btnMyList.setOnAction(e -> userList(e));
-		hyLinkLogout.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		Platform.runLater(new Runnable() {
 			@Override
-			public void handle(MouseEvent event) {
-				primaryStage.close();
+			public void run()
+			{
+				changeDate();
+
+				btnMyList.setOnAction(e -> userList(e));
+				hyLinkLogout.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						primaryStage.close();
+					}
+				});
+				btnUpload.setOnAction(e -> upLoadDiary(e));				
 			}
 		});
-		btnUpload.setOnAction(e -> upLoadDiary(e));
 
 	}
 

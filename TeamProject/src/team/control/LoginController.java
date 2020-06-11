@@ -3,27 +3,25 @@ package team.control;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
-
 import java.util.ResourceBundle;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import team.connect.ConnectionDAO;
+import team.data.User;
 
 
 
@@ -56,8 +54,8 @@ public class LoginController implements Initializable
 	
 	public void buttonSigninAction(ActionEvent aa) {
 		ConnectionDAO idcheck = new ConnectionDAO();
-		
-		if(idcheck.login(textid.getText(), textPassword.getText()) ==0) {
+		User userinfo = idcheck.login(textid.getText(), textPassword.getText());
+		if( userinfo ==null) {
 			messageDialog("아이디/비밀번호 입력 오류");
 			return;
 		}
@@ -67,23 +65,29 @@ public class LoginController implements Initializable
 		nextStage.initModality(Modality.WINDOW_MODAL);
 		nextStage.initOwner(buttonSignin.getScene().getWindow());
 		
-//		try
-//		{
-//			try
-//			{
+		try
+		{
+			try
+			{
 //				Parent parent = FXMLLoader.load(getClass().getResource("ui/Main.fxml"));
-//				Scene scene = new Scene(parent);
-//				nextStage.setScene(scene);
-//				nextStage.setResizable(false);
-//				nextStage.show();
-//			} catch (IOException e)
-//			{
-//				
-//				e.printStackTrace();
-//			}
-//		}catch(NullPointerException e){
-//			e.printStackTrace();
-//		}
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/team/ui/Main.fxml"));
+				Parent parent = loader.load();
+				
+				MainController mainController  = loader.getController();
+				mainController.setUserInfo(userinfo);
+				
+				Scene scene = new Scene(parent);
+				nextStage.setScene(scene);
+				nextStage.setResizable(false);
+				nextStage.show();
+			} catch (IOException e)
+			{
+				
+				e.printStackTrace();
+			}
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
 //		
 //		
 		
