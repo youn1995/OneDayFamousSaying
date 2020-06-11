@@ -6,24 +6,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: skyblue;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-   <children>
-      <TableView id="tableViewUserList" layoutX="16.0" layoutY="41.0" prefHeight="440.0" prefWidth="269.0">
-        <columns>
-          <TableColumn prefWidth="159.0" text="제목" />
-            <TableColumn prefWidth="109.0" text="작성일" />
-        </columns>
-      </TableView>
-      <Label layoutX="17.0" layoutY="15.0" text="My List">
-         <font>
-            <Font name="Segoe Script" size="14.0" />
-         </font>
-      </Label>
-      <Hyperlink id="hyLinkReturn" layoutX="143.0" layoutY="13.0" text="Return To MainPage">
-         <font>
-            <Font name="Segoe Script" size="12.0" />
-         </font>
-      </Hyperlink>
-   </children>
+<AnchorPane prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: skyblue;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<TableView id="tableViewUserList" layoutX="16.0" layoutY="41.0" prefHeight="431.0" prefWidth="269.0">
+			<columns>
+				<TableColumn prefWidth="159.0" text="제목" />
+				<TableColumn prefWidth="109.0" text="작성일" />
+			</columns>
+		</TableView>
+		<Label layoutX="17.0" layoutY="15.0" text="My List">
+			<font>
+				<Font name="Segoe Script" size="14.0" />
+			</font>
+		</Label>
+		<Hyperlink id="hyLinkReturn" layoutX="143.0" layoutY="13.0" text="Return To MainPage">
+			<font>
+				<Font name="Segoe Script" size="12.0" />
+			</font>
+		</Hyperlink>
+      <Hyperlink layoutX="6.0" layoutY="474.0" text="  &lt; 이전" />
+      <Hyperlink layoutX="242.0" layoutY="473.0" text="다음 &gt;  " />
+	</children>
 </AnchorPane>
