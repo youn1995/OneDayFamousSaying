@@ -2,17 +2,11 @@ package team.control;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,31 +23,23 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import team.connect.ConnectionDAO;
 import team.data.Diary;
 import team.data.User;
 
 public class MainController implements Initializable {
-
-	User userInfo;
-	Stage primaryStage;
-
 	@FXML
 	Button btnMyList, btnUpload;
 	@FXML
@@ -65,32 +51,26 @@ public class MainController implements Initializable {
 	@FXML
 	TextField txtFieldTitle;
 
-	TableView<Diary> tableViewUserList;
+	private User userInfo;
+	private Stage primaryStage;
+	private TableView<Diary> tableViewUserList;
 	private boolean stop;
+
+	public void setUserInfo(User userInfo) {
+		this.userInfo = userInfo;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Platform.runLater(new Runnable() {
 			@Override
-			public void run()
-			{
+			public void run() {
 				changeDate();
-
 				btnMyList.setOnAction(e -> userList(e));
-				hyLinkLogout.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						primaryStage.close();
-					}
-				});
-				btnUpload.setOnAction(e -> upLoadDiary(e));				
+				hyLinkLogout.setOnMouseClicked(event -> primaryStage.close());
+				btnUpload.setOnAction(e -> upLoadDiary(e));
 			}
 		});
-
-	}
-
-	public void setUserInfo(User userInfo) {
-		this.userInfo = userInfo;
 	}
 
 	public void userList(ActionEvent e) {
@@ -105,7 +85,7 @@ public class MainController implements Initializable {
 			addStage.show();
 			tableViewUserList = (TableView<Diary>) parent.lookup("#tableViewUserList");
 			ConnectionDAO cDAO = new ConnectionDAO();
-			ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO.getUserDiaryList(1);
+			ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO.getUserDiaryList(userInfo.getUserid());
 			TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(0);
 			tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
 			TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(1);
@@ -123,20 +103,18 @@ public class MainController implements Initializable {
 						stop = true;
 						labDate.setText(diary.getListDate());
 						addStage.close();
-					} else if (event.getButton() == MouseButton.SECONDARY){
-						System.out.println("오른쪽 클릭");
+					} else if (event.getButton() == MouseButton.SECONDARY) {
 						contextMenu(event);
 						tableViewUserList.getSelectionModel().selectedItemProperty().getValue();
-						
 					}
 
 				}
 			});
-			
+
 			Hyperlink hyLinkReturn = (Hyperlink) parent.lookup("#hyLinkReturn");
 			hyLinkReturn.setOnMouseClicked(event -> addStage.close());
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			messagePopup(1, "리스트를 불러올 수 없습니다. 관리자에게 문의하세요.");
 		}
 	}
 
@@ -150,7 +128,7 @@ public class MainController implements Initializable {
 			Diary diary = new Diary(-1, title, content, labDate.getText());
 			ConnectionDAO cDAO = new ConnectionDAO();
 			try {
-				cDAO.insertUserDiary(1, diary);
+				cDAO.insertUserDiary(userInfo.getUserid(), diary);
 				messagePopup(3, "업로드 완료");
 				changeDate();
 				txtFieldTitle.setText(null);
@@ -211,38 +189,40 @@ public class MainController implements Initializable {
 		popup.setAutoHide(true);
 		popup.show(btnMyList.getScene().getWindow());
 	}
-	
-	public void contextMenu(MouseEvent event) {		  
-	        ContextMenu contextMenu = new ContextMenu();
-	 
-	        MenuItem item1 = new MenuItem("수정");
-	        item1.setOnAction(new EventHandler<ActionEvent>() {
-	 
-	            @Override
-	            public void handle(ActionEvent event) {
+
+	public void contextMenu(MouseEvent event) {
+		ContextMenu contextMenu = new ContextMenu();
+
+		MenuItem item1 = new MenuItem("수정");
+		item1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
 //	            	addStage.close();
-	            }
-	        });
-	        MenuItem item2 = new MenuItem("삭제");
-	        item2.setOnAction(new EventHandler<ActionEvent>() {
-	 
-	            @Override
-	            public void handle(ActionEvent event) {
-	            	System.out.println("sss");
-	            }
-	        });
-	        
-	        MenuItem item3 = new MenuItem("뒤로가기");
-	        item2.setOnAction(new EventHandler<ActionEvent>() {
-	 
-	            @Override
-	            public void handle(ActionEvent event) {
-	            	System.out.println("sss");
-	            }
-	        });
-	
-	        contextMenu.getItems().addAll(item1, item2, item3);
-	        contextMenu.show(tableViewUserList.getScene().getWindow(), event.getScreenX(), event.getScreenY());
+			}
+		});
+		MenuItem item2 = new MenuItem("삭제");
+		item2.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				ConnectionDAO cDAO = new ConnectionDAO();
+				cDAO.deleteUserDiary(userInfo.getUserid(),
+						tableViewUserList.getSelectionModel().selectedItemProperty().getValue().getListId());
+						tableViewUserList.setItems((ObservableList<Diary>) cDAO.getUserDiaryList(userInfo.getUserid()));;
+			}
+		});
+
+		MenuItem item3 = new MenuItem("뒤로가기");
+		item3.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("sss");
+			}
+		});
+
+		contextMenu.getItems().addAll(item1, item2, item3);
+		contextMenu.show(tableViewUserList.getScene().getWindow(), event.getScreenX(), event.getScreenY());
 
 	}
 }
