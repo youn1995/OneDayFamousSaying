@@ -10,17 +10,8 @@ public class User
 	private SimpleStringProperty name;
 	private SimpleStringProperty email;
 	
-<<<<<<< HEAD
-	
-	public User(int userid, String loginid, String name, String email)
-	{
-		this.userid = new SimpleIntegerProperty(userid);
-		this.loginid = new SimpleStringProperty(loginid);
-		this.name = new SimpleStringProperty(name);
-		this.email = new SimpleStringProperty(email);
-	}
 
-=======
+	
 	//user생성자
 	public User(int userid, String loginid, String name, String email)
 	{
@@ -29,7 +20,7 @@ public class User
 		this.name = new SimpleStringProperty(name);
 		this.email = new SimpleStringProperty(email);
 	}
->>>>>>> branch 'master' of https://github.com/youn1995/OneDayFamousSaying
+
 	//userid	
 	public int getUserid()
 	{
