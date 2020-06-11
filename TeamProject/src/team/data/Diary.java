@@ -35,6 +35,7 @@ public class Diary {
 	}
 
 	public void setTitle(String title) {
+		System.out.println(title+" diary");
 		this.title.set(title);
 	}
 

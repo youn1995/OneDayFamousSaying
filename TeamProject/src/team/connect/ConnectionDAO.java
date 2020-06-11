@@ -16,7 +16,7 @@ public class ConnectionDAO {
 
 	public Connection getConnect() { // 세션접속
 
-		String url = "jdbc:oracle:thin:@localhost:1521:xe";
+		String url = "jdbc:oracle:thin:@192.168.0.74:1521:xe";
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, "hr", "hr");
@@ -37,7 +37,7 @@ public class ConnectionDAO {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				String listDateSubString = rs.getString("list_date").substring(0, 10);
+				String listDateSubString = rs.getString("list_date").substring(0, 16);
 				Diary diary = new Diary(rs.getInt("list_id"), rs.getString("title"), rs.getString("content"),
 						listDateSubString);
 				list.add(diary);
@@ -51,7 +51,7 @@ public class ConnectionDAO {
 	}
 
 	public void insertUserDiary(int userId, Diary diary) {
-		String sql = String.format("insert into diary_list values(DIARY_USER_ID_SEQ.nextval, '%s', '%s', '%s', %d)",
+		String sql = String.format("insert into diary_list values(DIARY_LIST_ID_SEQ.nextval, '%s', '%s', to_date('%s', 'YYYY-MM-DD hh24:mi'), %d)",
 				diary.getTitle(), diary.getContent(), diary.getListDate(), userId);
 		conn = getConnect();
 		try {
