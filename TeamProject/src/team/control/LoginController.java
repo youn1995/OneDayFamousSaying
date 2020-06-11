@@ -49,7 +49,10 @@ public class LoginController implements Initializable
 			{
 				buttonSigninAction(arg0);
 			}
+			
 		});
+		
+		
 	}
 	
 	public void buttonSigninAction(ActionEvent aa) {
@@ -115,5 +118,6 @@ public class LoginController implements Initializable
 		customStage.setScene(scene);
 		customStage.show();
 	}
+	
 }
 
