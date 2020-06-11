@@ -6,27 +6,69 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import team.data.User;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import team.data.Diary;
 
 public class ConnectionDAO {
+
+	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	public Connection getConnect()
+	{ // 세션접속
 
-	public Connection getConnect() { // 세션접속
 
 		String url = "jdbc:oracle:thin:@192.168.0.74:1521:xe";
 		try {
+
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, "hr", "hr");
-		} catch (SQLException e) {
+		} catch (SQLException e)
+		{
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e)
+		{
 			e.printStackTrace();
 		}
 		return conn;
 	}
+	
+	public int login(String loginid, String password)
+	{
+		try
+		{
+
+			String sql = "select count(*) as check " + " from diary_user "
+					+ " where login_id ='" + loginid + "'" + " and password= '"
+					+ password + "'";
+			conn = getConnect();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if (rs.getInt("check") == 0)
+			{
+				return 0;
+			}
+			
+			sql = "select *" + " from diary_user " + " where login_id ='"
+					+ loginid + "'" + " and password= '" + password + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			User user = new User(rs.getInt("user_id"), rs.getString("login_id"),
+					rs.getString("user_name"), rs.getString("user_password"));
+
+			return 1;
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
 
 	public ObservableList<Diary> getUserDiaryList(int userId) {
 		ObservableList<Diary> list = FXCollections.observableArrayList();
