@@ -2,8 +2,12 @@ package team.control;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,14 +28,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import team.connect.ConnectionDAO;
 import team.data.Diary;
 import team.data.User;
 
 public class MainController implements Initializable {
-	
+
 	User userInfo;
 	Stage primaryStage;
-	
+
 	@FXML
 	Button btnMyList, btnUpload;
 	@FXML
@@ -42,10 +47,13 @@ public class MainController implements Initializable {
 	Label labDate;
 	@FXML
 	TextField txtFieldTitle;
-	
+
+	private boolean stop;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		labDate.setText(value);
+		changeDate();
+
 		btnMyList.setOnAction(e -> userList(e));
 		hyLinkLogout.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -54,13 +62,13 @@ public class MainController implements Initializable {
 			}
 		});
 		btnUpload.setOnAction(e -> upLoadDiary(e));
-		
+
 	}
-	
+
 	public void setUserInfo(User userInfo) {
 		this.userInfo = userInfo;
 	}
-	
+
 	public void userList(ActionEvent e) {
 		Stage addStage = new Stage(StageStyle.UTILITY);
 		addStage.initModality(Modality.WINDOW_MODAL);
@@ -71,9 +79,9 @@ public class MainController implements Initializable {
 			addStage.setScene(scene);
 			addStage.setResizable(false);
 			addStage.show();
-			
 			TableView<Diary> tableViewUserList = (TableView<Diary>) parent.lookup("#tableViewUserList");
-//			ObservableList<Diary> userDiaryList = (ObservableList<Diary>)
+			ConnectionDAO cDAO = new ConnectionDAO();
+			ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO.getUserDiaryList(userInfo.getUserid());
 			TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(0);
 			tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
 			TableColumn<Diary, String> tcContent = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(1);
@@ -83,17 +91,51 @@ public class MainController implements Initializable {
 			tableViewUserList.getColumns().add(tcTitle);
 			tableViewUserList.getColumns().add(tcContent);
 			tableViewUserList.getColumns().add(tclistDate);
-//			tableViewUserList.setItems(userDiaryList);
-			
+			tableViewUserList.setItems(userDiaryList);
+
 			Hyperlink hyLinkReturn = (Hyperlink) parent.lookup("#hyLinkReturn");
 			hyLinkReturn.setOnMouseClicked(event -> addStage.close());
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 	}
+
 	public void upLoadDiary(ActionEvent e) {
-		txtFieldTitle.getText();
-		txtAreaContent.getText();
-		
+		stop = true;
+		String title = txtFieldTitle.getText();
+		String content = txtAreaContent.getText();
+		if (title == null || content == null || title.equals("") || content.equals("")) {
+//			popup창 만들기
+		} else {
+			Diary diary = new Diary();
+			diary.setTitle(title);
+			diary.setContent(content);
+			diary.setListDate(labDate.getText());
+			ConnectionDAO cDAO = new ConnectionDAO();
+			cDAO.insertUserDiary(userInfo.getUserid(), diary);
+		}
 	}
+
+	public void changeDate() {
+		stop = false;
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				while (!stop) {
+					LocalDateTime currDateTime = LocalDateTime.now();
+					Platform.runLater(() -> {
+						labDate.setText(currDateTime.toString().replace('T', ' ').substring(0, 16));
+					});
+					try {
+						Thread.sleep(50);
+					} catch (InterruptedException e) {
+					}
+
+				}
+			};
+		};
+		thread.setDaemon(true);
+		thread.start();
+	}
+
 }

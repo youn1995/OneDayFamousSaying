@@ -7,13 +7,16 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import team.connect.ConnectionDAO;
 
 public class LoginController implements Initializable
@@ -39,15 +42,39 @@ public class LoginController implements Initializable
 	
 	public void buttonSigninAction(ActionEvent aa) {
 		ConnectionDAO idcheck = new ConnectionDAO();
-		
+		System.out.println(textid.getText());
+		System.out.println(textPassword.getText());
 		if(idcheck.login(textid.getText(), textPassword.getText()) ==0) {
-			System.out.println("잘못입력함");
-			// 다이얼창 뜨게하기
+			messageDialog("아이디/비밀번호 입력 오류");
 			return;
 		}
 		Platform.exit();
 		//signup창으로 넘어가게 만들어주기
 		
+		
 	}
-
+	public void messageDialog(String message) {
+		Stage customStage = new Stage(StageStyle.UTILITY);
+		customStage.initModality(Modality.WINDOW_MODAL);
+		customStage.initOwner(buttonSignin.getScene().getWindow());
+		customStage.setTitle("오류");
+		
+		AnchorPane ap = new AnchorPane();
+		ap.setPrefSize(400, 150);
+		
+		Button button = new Button("확인");
+		button.setLayoutX(336);
+		button.setLayoutY(104);
+		button.setOnAction(e->customStage.close());
+		
+		Label label = new Label(message);
+		
+		ap.getChildren().add(button);
+		ap.getChildren().add(label);
+		
+		Scene scene = new Scene(ap);
+		customStage.setScene(scene);
+		customStage.show();
+	}
 }
+
