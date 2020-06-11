@@ -10,6 +10,8 @@
 	style="-fx-background-color: skyblue;"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="/team/control/LoginController">
+
+
 	<children>
 		<Label prefHeight="36.0" prefWidth="178.0" text="Kakao Diary"
 			textFill="WHITE">
@@ -24,9 +26,15 @@
 				<Button fx:id="buttonSignin" layoutX="65.0" layoutY="134.0"
 					mnemonicParsing="false" prefHeight="23.0" prefWidth="103.0"
 					text="Sign in" />
+
 				<TextField fx:id="textid" PromptText="id"
 					alignment="CENTER" layoutX="31.0" layoutY="48.0"
-					style="-fx-background-radius: 30;" />
+
+				<TextField fx:id="textid" PromptText="id" alignment="CENTER"
+					layoutX="31.0" layoutY="48.0" style="-fx-background-radius: 30;" />
+				<PasswordField fx:id="textPassword" PromptText="password"
+					alignment="CENTER" layoutX="31.0" layoutY="89.0"
+
 				<PasswordField fx:id="textpassword"
 					PromptText="password" alignment="CENTER" layoutX="31.0"
 					layoutY="89.0" style="-fx-background-radius: 30;" />
