@@ -10,6 +10,14 @@ public class User
 	private SimpleStringProperty name;
 	private SimpleStringProperty email;
 	
+	//user생성자
+	public User(int userid, String loginid, String name, String email)
+	{
+		this.userid = new SimpleIntegerProperty(userid);
+		this.loginid = new SimpleStringProperty(loginid);
+		this.name = new SimpleStringProperty(name);
+		this.email = new SimpleStringProperty(email);
+	}
 	//userid	
 	public int getUserid()
 	{
