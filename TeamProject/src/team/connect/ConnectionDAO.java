@@ -67,10 +67,11 @@ public class ConnectionDAO {
 	}
 
 	// 유저다이어리 목록 호출
-	public ObservableList<Diary> getUserDiaryList(int userId) {
+	public ObservableList<Diary> getUserDiaryList(int userId, int startNum) {
 		ObservableList<Diary> list = FXCollections.observableArrayList();
 		String sql = String.format(
-				"select list_id, title, content, list_date from diary_list where user_id = %d order by 4 desc", userId);
+				"select rownum, list_id, title, content, list_date from (select list_id, title, content, list_date from diary_list where user_id = %d order by 4 desc) where rownum BETWEEN %d and %d",
+				userId, startNum, startNum + 15);
 		conn = getConnect();
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -104,10 +105,10 @@ public class ConnectionDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// 유저 일기 삭제
 	public void deleteUserDiary(int userId, int listId) {
-		String sql = String.format("delete diary_list where list_id = %d and user_id = %s", listId, userId);
+		String sql = String.format("delete diary_list where list_id = %d and user_id = %d", listId, userId);
 		conn = getConnect();
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -115,6 +116,43 @@ public class ConnectionDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	// 유저 일기 수정
+	public void updateUserDiary(int userId, Diary diary) {
+		String sqlContent = String.format("update diary_list set content = '%s' where list_id = %d and user_id = %d",
+				diary.getContent(), diary.getListId(), userId);
+		String sqlTitle = String.format("update diary_list set title = '%s' where list_id = %d and user_id = %d",
+				diary.getTitle(), diary.getListId(), userId);
+		conn = getConnect();
+		try {
+			pstmt = conn.prepareStatement(sqlContent);
+			pstmt.executeUpdate();
+			pstmt = conn.prepareStatement(sqlTitle);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int getUserListCount(int userId) {
+		int userListCount = 0;
+		String sql = String.format("select count(*) as count from  diary_list where user_id = %d", userId);
+		conn = getConnect();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				userListCount = rs.getInt("count");
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return userListCount;
 
 	}
 
