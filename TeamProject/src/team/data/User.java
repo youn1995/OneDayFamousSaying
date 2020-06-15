@@ -20,6 +20,8 @@ public class User
 		this.name = new SimpleStringProperty(name);
 		this.email = new SimpleStringProperty(email);
 	}
+	
+	
 
 	//userid	
 	public int getUserid()

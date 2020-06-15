@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: skyblue;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
-   <children>
-      <Button fx:id="buttonSignupComp" layoutX="50.0" layoutY="343.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="66.0" text="Sign up" />
-      <Button fx:id="buttonCancel" layoutX="184.0" layoutY="343.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="66.0" text="cancel" />
-      <Pane layoutX="50.0" layoutY="109.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 30;">
-         <children>
-            <TextField fx:id="textEmail" layoutX="31.0" layoutY="148.0" promptText="email" />
-            <TextField fx:id="textName" layoutX="31.0" layoutY="108.0" promptText="name" />
-            <TextField fx:id="textSignId" layoutX="31.0" layoutY="28.0" promptText="id" />
-            <PasswordField fx:id="textSignPassword" layoutX="31.0" layoutY="66.0" promptText="password" />
-         </children>
-      </Pane>
-      <Label layoutX="128.0" layoutY="71.0" text="Sign up" />
-   </children>
+<AnchorPane prefHeight="500.0" prefWidth="300.0"
+	style="-fx-background-color: skyblue;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	>
+	<children>
+		<Button fx:id="buttonSignupComp" layoutX="50.0" layoutY="343.0"
+			mnemonicParsing="false" prefHeight="23.0" prefWidth="66.0"
+			style="-fx-background-radius: 30;" text="Sign up" />
+		<Button fx:id="buttonCancel" layoutX="184.0" layoutY="343.0"
+			mnemonicParsing="false" prefHeight="23.0" prefWidth="66.0"
+			style="-fx-background-radius: 30;" text="cancel" />
+		<Pane layoutX="50.0" layoutY="109.0" prefHeight="200.0"
+			prefWidth="200.0"
+			style="-fx-background-color: white; -fx-background-radius: 30;">
+			<children>
+				<TextField id="textEmail" alignment="CENTER"
+					layoutX="31.0" layoutY="148.0" promptText="email" />
+				<TextField id="textName" alignment="CENTER"
+					layoutX="31.0" layoutY="108.0" promptText="name" />
+				<TextField id="textSignId" alignment="CENTER"
+					layoutX="31.0" layoutY="28.0" promptText="id" />
+				<PasswordField id="textSignPassword"
+					alignment="CENTER" layoutX="31.0" layoutY="66.0"
+					promptText="password" />
+			</children>
+		</Pane>
+		<Label layoutX="86.0" layoutY="37.0" text="Sign up"
+			textFill="WHITE">
+			<font>
+				<Font name="Segoe Script" size="31.0" />
+			</font>
+		</Label>
+	</children>
 </AnchorPane>
