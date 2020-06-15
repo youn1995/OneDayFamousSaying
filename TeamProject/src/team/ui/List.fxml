@@ -24,7 +24,7 @@
 				<Font name="Segoe Script" size="12.0" />
 			</font>
 		</Hyperlink>
-      <Hyperlink layoutX="6.0" layoutY="474.0" text="  &lt; 이전" />
-      <Hyperlink layoutX="242.0" layoutY="473.0" text="다음 &gt;  " />
+      <Hyperlink id="hyLinkPre" layoutX="6.0" layoutY="474.0" text="  &lt; 이전" />
+      <Hyperlink id="hyLinkNext" layoutX="242.0" layoutY="473.0" text="다음 &gt;  " />
 	</children>
 </AnchorPane>

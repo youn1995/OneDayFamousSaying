@@ -12,15 +12,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import team.data.Diary;
 
-public class ConnectionDAO
-{
+public class ConnectionDAO {
 
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 
-	public Connection getConnect()
-	{ // 세션접속
+
+	public Connection getConnect() { // 세션접속
+
 
 		String url = "jdbc:oracle:thin:@192.168.0.74:1521:xe";
 		try
@@ -28,21 +28,17 @@ public class ConnectionDAO
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, "hr", "hr");
-		} catch (SQLException e)
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e)
-		{
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return conn;
 	}
 
-	public User login(String loginid, String password)
-	{
+	public User login(String loginid, String password) {
 		User userinfo = null;
-		try
-		{
+		try {
 
 			String sql = "select count(*) as CNT from diary_user where login_id ='" + loginid + "'"
 					+ " and user_password= '" + password + "'";
@@ -50,10 +46,8 @@ public class ConnectionDAO
 			conn = getConnect();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if (rs.next())
-			{
-				if (rs.getInt("CNT") == 0)
-				{
+			if (rs.next()) {
+				if (rs.getInt("CNT") == 0) {
 					return null;
 				}
 			}
@@ -61,21 +55,22 @@ public class ConnectionDAO
 					+ password + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if (rs.next())
-			{
+			if (rs.next()) {
 				User user = new User(rs.getInt("user_id"), rs.getString("login_id"), rs.getString("user_name"),
 						rs.getString("user_password"));
 				userinfo = user;
 			}
 			return userinfo;
 
-		} catch (SQLException e)
-		{
+
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 
 			return null;
 		}
 	}
+
 
 	public void SignUp(String signid, String username, String userpassword, String email)
 	{
@@ -99,14 +94,16 @@ public class ConnectionDAO
 
 	}
 
-	public ObservableList<Diary> getUserDiaryList(int userId)
-	{
+
+	// 유저다이어리 목록 호출
+	public ObservableList<Diary> getUserDiaryList(int userId, int startNum) {
+
 		ObservableList<Diary> list = FXCollections.observableArrayList();
 		String sql = String.format(
-				"select list_id, title, content, list_date from diary_list where user_id = %d order by 4 desc", userId);
+				"select rownum, list_id, title, content, list_date from (select list_id, title, content, list_date from diary_list where user_id = %d order by 4 desc) where rownum BETWEEN %d and %d",
+				userId, startNum, startNum + 15);
 		conn = getConnect();
-		try
-		{
+		try {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -117,8 +114,7 @@ public class ConnectionDAO
 						listDateSubString);
 				list.add(diary);
 			}
-		} catch (SQLException e)
-		{
+		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
@@ -126,26 +122,71 @@ public class ConnectionDAO
 		return list;
 	}
 
-	public void insertUserDiary(int userId, Diary diary)
-	{
+
+	// 유저가 쓴 일기 INSERT
+	public void insertUserDiary(int userId, Diary diary) {
+
 		String sql = String.format(
 				"insert into diary_list values(DIARY_LIST_ID_SEQ.nextval, '%s', '%s', to_date('%s', 'YYYY-MM-DD hh24:mi'), %d)",
 
 				diary.getTitle(), diary.getContent(), diary.getListDate(), userId);
 		conn = getConnect();
-		try
-		{
+		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-		} catch (SQLException e)
-		{
-
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void deleteUserDiary(int userId, int listId)
-	{
+	// 유저 일기 삭제
+	public void deleteUserDiary(int userId, int listId) {
+		String sql = String.format("delete diary_list where list_id = %d and user_id = %d", listId, userId);
+		conn = getConnect();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	// 유저 일기 수정
+	public void updateUserDiary(int userId, Diary diary) {
+		String sqlContent = String.format("update diary_list set content = '%s' where list_id = %d and user_id = %d",
+				diary.getContent(), diary.getListId(), userId);
+		String sqlTitle = String.format("update diary_list set title = '%s' where list_id = %d and user_id = %d",
+				diary.getTitle(), diary.getListId(), userId);
+		conn = getConnect();
+		try {
+			pstmt = conn.prepareStatement(sqlContent);
+			pstmt.executeUpdate();
+			pstmt = conn.prepareStatement(sqlTitle);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int getUserListCount(int userId) {
+		int userListCount = 0;
+		String sql = String.format("select count(*) as count from  diary_list where user_id = %d", userId);
+		conn = getConnect();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				userListCount = rs.getInt("count");
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return userListCount;
+
 
 	}
 
