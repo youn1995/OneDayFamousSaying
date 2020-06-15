@@ -26,5 +26,6 @@
 		</Hyperlink>
       <Hyperlink id="hyLinkPre" layoutX="6.0" layoutY="474.0" text="  &lt; 이전" />
       <Hyperlink id="hyLinkNext" layoutX="242.0" layoutY="473.0" text="다음 &gt;  " />
+      <Label id="labPageNum" alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="476.0" text="." textAlignment="CENTER" />
 	</children>
 </AnchorPane>
