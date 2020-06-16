@@ -6,48 +6,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="pane" prefHeight="500.0" prefWidth="300.0"
-	style="-fx-background-color: skyblue;" 
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="team.control.LoginController" stylesheets = "@/team/css/style.css">
+<AnchorPane id="pane" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: skyblue;" stylesheets="@/team/css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="team.control.LoginController">
 
 
 	<children>
-		<Label layoutX="55.0" layoutY="91.0" text="User Login"
-			textFill="WHITE">
+		<Label layoutX="67.0" layoutY="92.0" prefHeight="66.0" prefWidth="178.0" text="User Login" textFill="WHITE">
 			<font>
-				<Font name="Segoe Script" size="36.0" />
+				<Font name="Segoe Script" size="30.0" />
 			</font>
 		</Label>
-		<Label prefHeight="36.0" prefWidth="178.0" text="Kakao Diary"
-			textFill="WHITE">
+		<Label layoutX="95.0" layoutY="74.0" prefHeight="36.0" prefWidth="110.0" text="Kakao Diary" textFill="WHITE">
 			<font>
-				<Font name="Segoe Script" size="25.0" />
+				<Font name="Segoe Script" size="15.0" />
 			</font>
 		</Label>
-		<Pane layoutX="51.0" layoutY="165.0" prefHeight="200.0"
-			prefWidth="200.0"
-			style="-fx-background-color: white; -fx-background-radius: 40;">
+		<Pane layoutX="51.0" layoutY="165.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 40;">
 			<children>
-				<Button fx:id="buttonSignin" layoutX="100.0" layoutY="151.0"
-					mnemonicParsing="false" prefHeight="15.0" prefWidth="87.0"
-					style="-fx-background-radius: 30;" text="Sign in" 
-					id="b1" stylesheets = "@/team/css/style.css">
+				<Button id="b1" fx:id="buttonSignin" layoutX="100.0" layoutY="151.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="87.0" style="-fx-background-radius: 30;" stylesheets="@/team/css/style.css" text="Sign in">
 					<font>
 						<Font name="Segoe Script" size="10.0" />
 					</font>
 				</Button>
-				<TextField fx:id="textid" PromptText="id"
-					alignment="CENTER" layoutX="31.0" layoutY="48.0"
-					style="-fx-background-radius: 30;" />
-				<PasswordField fx:id="textPassword"
-					PromptText="password" alignment="CENTER" layoutX="31.0"
-					layoutY="89.0" style="-fx-background-radius: 30;" />
+				<TextField fx:id="textid" PromptText="id" alignment="CENTER" layoutX="31.0" layoutY="48.0" style="-fx-background-radius: 30;" />
+				<PasswordField fx:id="textPassword" PromptText="password" alignment="CENTER" layoutX="31.0" layoutY="89.0" style="-fx-background-radius: 30;" />
 			</children>
 		</Pane>
-		<Button fx:id="buttonSignup" layoutX="156.0" layoutY="396.0"
-			mnemonicParsing="false" prefHeight="27.0" prefWidth="87.0"
-			style="-fx-background-radius: 30;" text="Sign up">
+		<Button fx:id="buttonSignup" layoutX="156.0" layoutY="396.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="87.0" style="-fx-background-radius: 30;" text="Sign up">
 			<font>
 				<Font name="Segoe Script" size="10.0" />
 			</font>
