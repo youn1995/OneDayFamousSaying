@@ -16,6 +16,7 @@ public class Main extends Application
 		
 		arg0.setScene(scene);
 		arg0.show();
+		arg0.setResizable(false);
 		
 	}
 	public static void main(String[] args)
