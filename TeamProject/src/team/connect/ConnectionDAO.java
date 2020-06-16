@@ -100,7 +100,7 @@ public class ConnectionDAO {
 
 		ObservableList<Diary> list = FXCollections.observableArrayList();
 		String sql = String.format(
-				"select rownum, list_id, title, content, list_date from (select list_id, title, content, list_date from diary_list where user_id = %d order by 4 desc) where rownum BETWEEN %d and %d",
+				"WITH E AS (SELECT ROWNUM as RO, X.* FROM ( SELECT A.* FROM DIARY_LIST A where A.user_id = %d ORDER BY A.list_date DESC) X) select * from E where E.RO BETWEEN %d AND %d",
 				userId, startNum, startNum + 15);
 		conn = getConnect();
 		try {

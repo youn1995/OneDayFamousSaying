@@ -98,7 +98,8 @@ public class MainController implements Initializable {
 			addStage.show();
 			tableViewUserList = (TableView<Diary>) parent.lookup("#tableViewUserList");
 			ConnectionDAO cDAO = new ConnectionDAO();
-			ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO.getUserDiaryList(userInfo.getUserid(), tableViewPreNextNum);
+			ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO.getUserDiaryList(userInfo.getUserid(),
+					tableViewPreNextNum);
 			TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(0);
 			tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
 			TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(1);
@@ -123,22 +124,28 @@ public class MainController implements Initializable {
 
 				}
 			});
+			Label labPageNum = (Label) parent.lookup("#labPageNum");
+			labPageNum.setText("< " + listPageNum + " >");
 			Hyperlink hyLinkPre = (Hyperlink) parent.lookup("#hyLinkPre");
 			hyLinkPre.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 				@Override
 				public void handle(MouseEvent event) {
-					System.out.println(listPageNum + " " + tableViewPreNextNum);
-					if(listPageNum >0) {
-					listPageNum--;
-					tableViewPreNextNum = tableViewPreNextNum -15;
-					ConnectionDAO cDAO = new ConnectionDAO();
-					ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO.getUserDiaryList(userInfo.getUserid(), tableViewPreNextNum);
-					TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(0);
-					tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
-					TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(1);
-					tcListDate.setCellValueFactory(new PropertyValueFactory<Diary, String>("listDate"));
-					tableViewUserList.setItems(userDiaryList);	
+					if (listPageNum > 1) {
+						listPageNum--;
+						Label labPageNum = (Label) parent.lookup("#labPageNum");
+						labPageNum.setText("< " + listPageNum + " >");
+						tableViewPreNextNum = tableViewPreNextNum - 15;
+						ConnectionDAO cDAO = new ConnectionDAO();
+						ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO
+								.getUserDiaryList(userInfo.getUserid(), tableViewPreNextNum);
+						TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns()
+								.get(0);
+						tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
+						TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList
+								.getColumns().get(1);
+						tcListDate.setCellValueFactory(new PropertyValueFactory<Diary, String>("listDate"));
+						tableViewUserList.setItems(userDiaryList);
 					}
 				}
 			});
@@ -146,21 +153,24 @@ public class MainController implements Initializable {
 			hyLinkNext.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					if(listPageNum < userListCount/16) {
-						System.out.println(listPageNum + " " + tableViewPreNextNum);
-						tableViewPreNextNum = tableViewPreNextNum +15;
+					if (listPageNum <= userListCount / 16) {
+						tableViewPreNextNum = tableViewPreNextNum + 15;
 						listPageNum++;
-					ConnectionDAO cDAO = new ConnectionDAO();
-					ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO.getUserDiaryList(userInfo.getUserid(), tableViewPreNextNum);
-					TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(0);
-					tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
-					TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(1);
-					tcListDate.setCellValueFactory(new PropertyValueFactory<Diary, String>("listDate"));
-					tableViewUserList.setItems(userDiaryList);
+						Label labPageNum = (Label) parent.lookup("#labPageNum");
+						labPageNum.setText("< " + listPageNum + " >");
+						ConnectionDAO cDAO = new ConnectionDAO();
+						ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO
+								.getUserDiaryList(userInfo.getUserid(), tableViewPreNextNum);
+						TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns()
+								.get(0);
+						tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
+						TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList
+								.getColumns().get(1);
+						tcListDate.setCellValueFactory(new PropertyValueFactory<Diary, String>("listDate"));
+						tableViewUserList.setItems(userDiaryList);
 					}
 				}
 			});
-			
 
 			Hyperlink hyLinkReturn = (Hyperlink) parent.lookup("#hyLinkReturn");
 			hyLinkReturn.setOnMouseClicked(event -> addStage.close());
