@@ -344,28 +344,9 @@ public class MainController implements Initializable {
 				{
 					myPage.close();
 				}
-				
 			});
-			
-		
-			
-	}catch(Exception ff){
-		ff.printStackTrace();
-	}
-	}
-=======
-
-			TextField mypageId = (TextField) parent.lookup("#mypageid");
-			TextField mypageName = (TextField) parent.lookup("#mypagename");
-			TextField mypageEmail = (TextField) parent.lookup("#mypageemail");
-
-			mypageId.setText(userInfo.getLoginid());
-			mypageName.setText(userInfo.getName());
-			mypageEmail.setText(userInfo.getEmail());
-
 		} catch (Exception e) {
 			messagePopup(1, "마이페이지를 열수없습니다. 관리자에게 문의하세요.");
 		}
 	}// end of myPage()
->>>>>>> branch 'master' of https://github.com/youn1995/OneDayFamousSaying
 }
