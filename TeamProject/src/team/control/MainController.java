@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -78,7 +79,8 @@ public class MainController implements Initializable {
 				});
 				btnUpload.setOnAction(e -> upLoadDiary(e));
 				hyLinkMyPage.setOnMouseClicked(event -> {
-					messagePopup(3, "서비스 준비중입니다.");
+					myPage(event);
+//					messagePopup(3, "서비스 준비중입니다.");
 				});
 			}
 		});
@@ -310,5 +312,32 @@ public class MainController implements Initializable {
 		contextMenu.getItems().addAll(item1, item2, item3);
 		contextMenu.show(tableViewUserList.getScene().getWindow(), event.getScreenX(), event.getScreenY());
 
+	}
+	public void myPage(MouseEvent event) {
+		
+		Stage myPage = new Stage(StageStyle.UTILITY);
+		myPage.initModality(Modality.WINDOW_MODAL);
+		myPage.initOwner(btnMyList.getScene().getWindow());
+		try {
+			Parent parent = FXMLLoader.load(getClass().getResource("/team/ui/Mypage.fxml"));
+			Scene scene = new Scene(parent);
+			myPage.setScene(scene);
+			myPage.setResizable(false);
+			myPage.show();
+			
+			TextField mypageid = (TextField) parent.lookup("#mypageid");
+			TextField mypagename = (TextField) parent.lookup("#mypagename");
+			TextField mypageemail = (TextField) parent.lookup("#mypageemail");
+			
+			mypageid.setText(userInfo.getLoginid());
+			mypagename.setText(userInfo.getName());
+			mypageemail.setText(userInfo.getEmail());
+			
+			
+		
+			
+	}catch(Exception ff){
+		ff.printStackTrace();
+	}
 	}
 }

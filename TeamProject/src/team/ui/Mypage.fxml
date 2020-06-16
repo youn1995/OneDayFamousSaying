@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: skyblue; -fx-background-radius: 30;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="31.0" layoutY="112.0" text="ID" textFill="WHITE" />
+      <Label layoutX="31.0" layoutY="168.0" text="name" textFill="WHITE" />
+      <Label layoutX="31.0" layoutY="220.0" text="email" textFill="WHITE" />
+      <TextField id="mypageid" layoutX="81.0" layoutY="108.0" style="-fx-background-radius: 30;" />
+      
+      <TextField id="mypagename" layoutX="81.0" layoutY="164.0" style="-fx-background-radius: 30;" />
+      <TextField id="mypageemail" layoutX="81.0" layoutY="216.0" style="-fx-background-radius: 30;" />
+      <Button id="ok" layoutX="61.0" layoutY="316.0" mnemonicParsing="false" text="확인" />
+      
+   </children>
+</AnchorPane>

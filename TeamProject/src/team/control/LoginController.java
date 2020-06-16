@@ -91,6 +91,9 @@ public class LoginController implements Initializable
 				nextStage.setScene(scene);
 				nextStage.setResizable(false);
 				nextStage.show();
+				textid.setText(null);
+				textPassword.setText(null);
+				
 			} catch (IOException e)
 			{
 
