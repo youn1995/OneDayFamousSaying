@@ -18,21 +18,15 @@ public class ConnectionDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 
-
 	public Connection getConnect() { // 세션접속
 
-
 		String url = "jdbc:oracle:thin:@192.168.0.74:1521:xe";
-		try
-		{
+		try {
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, "hr", "hr");
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		} catch (ClassNotFoundException e) {}
 		return conn;
 	}
 
@@ -57,43 +51,28 @@ public class ConnectionDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				User user = new User(rs.getInt("user_id"), rs.getString("login_id"), rs.getString("user_name"),
-						rs.getString("user_password"));
+						rs.getString("email"));
 				userinfo = user;
 			}
 			return userinfo;
 
-
 		} catch (SQLException e) {
-
-			e.printStackTrace();
-
 			return null;
 		}
 	}
 
+	public void SignUp(String signid, String username, String userpassword, String email) {
 
-	public void SignUp(String signid, String username, String userpassword, String email)
-	{
-
-		try
-		{
+		try {
 			conn = getConnect();
-			String sql = String.format(
-					"insert into diary_user values (diary_user_id_seq.nextval, "
-													+ "'%s', "
-													+ "'%s',"
-													+ " '%s',"
-													+ " '%s')", signid, username, userpassword, email);
+			String sql = String.format("insert into diary_user values (diary_user_id_seq.nextval, " + "'%s', " + "'%s',"
+					+ " '%s'," + " '%s')", signid, username, userpassword, email);
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
+		} catch (SQLException e) {
 		}
-
 	}
-
 
 	// 유저다이어리 목록 호출
 	public ObservableList<Diary> getUserDiaryList(int userId, int startNum) {
@@ -107,21 +86,16 @@ public class ConnectionDAO {
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 
-			while (rs.next())
-			{
+			while (rs.next()) {
 				String listDateSubString = rs.getString("list_date").substring(0, 16);
 				Diary diary = new Diary(rs.getInt("list_id"), rs.getString("title"), rs.getString("content"),
 						listDateSubString);
 				list.add(diary);
 			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 
 		return list;
 	}
-
 
 	// 유저가 쓴 일기 INSERT
 	public void insertUserDiary(int userId, Diary diary) {
@@ -134,9 +108,7 @@ public class ConnectionDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 	}
 
 	// 유저 일기 삭제
@@ -146,9 +118,7 @@ public class ConnectionDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 
 	}
 
@@ -164,9 +134,7 @@ public class ConnectionDAO {
 			pstmt.executeUpdate();
 			pstmt = conn.prepareStatement(sqlTitle);
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 	}
 
 	public int getUserListCount(int userId) {
@@ -180,14 +148,9 @@ public class ConnectionDAO {
 			while (rs.next()) {
 				userListCount = rs.getInt("count");
 			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 
 		return userListCount;
-
-
 	}
 
 }
