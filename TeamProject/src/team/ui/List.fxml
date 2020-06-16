@@ -11,11 +11,11 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	id="list" stylesheets = "@/team/css/style.css">
 	<children>
-		<TableView id="tableViewUserList" layoutX="16.0"
-			layoutY="41.0" prefHeight="431.0" prefWidth="269.0">
+
+		<TableView id="tableViewUserList" layoutX="16.0" layoutY="41.0" prefHeight="430.0" prefWidth="270.0">
 			<columns>
-				<TableColumn prefWidth="159.0" text="제목" />
-				<TableColumn prefWidth="109.0" text="작성일" />
+				<TableColumn maxWidth="135.0" minWidth="135.0" prefWidth="135.0" resizable="false" text="제목" />
+				<TableColumn maxWidth="135.0" minWidth="135.0" prefWidth="135.0" resizable="false" text="작성일" />
 			</columns>
 		</TableView>
 		<Label layoutX="17.0" layoutY="15.0" text="My List">

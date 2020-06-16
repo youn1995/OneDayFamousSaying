@@ -19,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -42,25 +41,26 @@ import team.data.User;
 
 public class MainController implements Initializable {
 	@FXML
-	Button btnMyList, btnUpload;
+	private Button btnMyList, btnUpload;
 	@FXML
-	Hyperlink hyLinkMyPage, hyLinkLogout;
+	private Hyperlink hyLinkMyPage, hyLinkLogout;
 	@FXML
-	TextArea txtAreaContent;
+	private TextArea txtAreaContent;
 	@FXML
-	Label labDate;
+	private Label labDate;
 	@FXML
-	TextField txtFieldTitle;
+	private TextField txtFieldTitle;
 
+	private boolean stop;
 	private Diary updateDiary;
 	private User userInfo;
 	private TableView<Diary> tableViewUserList;
-	private boolean stop;
+
 	private int tableViewPreNextNum = 1;
 	private int userListCount = 0;
 	private int listPageNum = 1;
 
-	public void setUserInfo(User userInfo) {
+	public void setUserInfo(User userInfo) { // LoginController에서 유저정보 가져오기
 		this.userInfo = userInfo;
 	}
 
@@ -75,18 +75,18 @@ public class MainController implements Initializable {
 				btnMyList.setOnAction(e -> userList(e));
 				hyLinkLogout.setOnMouseClicked(event -> {
 					((Stage) hyLinkLogout.getScene().getWindow()).close();
-					// id,비번 초기화
 				});
 				btnUpload.setOnAction(e -> upLoadDiary(e));
 				hyLinkMyPage.setOnMouseClicked(event -> {
 					myPage(event);
-//					messagePopup(3, "서비스 준비중입니다.");
 				});
+				txtAreaContent.setWrapText(true);
+				
 			}
 		});
 	}
 
-	public void userList(ActionEvent e) {
+	public void userList(ActionEvent e) { // 유저 작성글 리스트 페이지
 		Stage addStage = new Stage(StageStyle.UTILITY);
 		addStage.initModality(Modality.WINDOW_MODAL);
 		addStage.initOwner(btnMyList.getScene().getWindow());
@@ -109,26 +109,29 @@ public class MainController implements Initializable {
 
 				@Override
 				public void handle(MouseEvent event) {
-					if (event.getClickCount() == 2) {
-						Diary diary = tableViewUserList.getSelectionModel().selectedItemProperty().getValue();
-						txtFieldTitle.setText(diary.getTitle());
-						txtAreaContent.setText(diary.getContent());
-						stop = true;
-						labDate.setText(diary.getListDate());
-						updateDiary = diary;
-						addStage.close();
-					} else if (event.getButton() == MouseButton.SECONDARY) {
-						contextMenu(event);
-						tableViewUserList.getSelectionModel().selectedItemProperty().getValue();
-					}
+					if(tableViewUserList.getSelectionModel().selectedItemProperty().getValue() != null) {
+						if (event.getClickCount() == 2) { // 리스트내용 더블클릭
+							Diary diary = tableViewUserList.getSelectionModel().selectedItemProperty().getValue();
+							txtFieldTitle.setText(diary.getTitle());
+							txtAreaContent.setText(diary.getContent());
+							stop = true;
+							labDate.setText(diary.getListDate());
+							updateDiary = diary;
+							addStage.close();
+						} else if (event.getButton() == MouseButton.SECONDARY) { // 마우스 오른쪽 클릭
+							contextMenu(event);
+							tableViewUserList.getSelectionModel().selectedItemProperty().getValue();
+						}
+					}else {}
 
 				}
 			});
-			Label labPageNum = (Label) parent.lookup("#labPageNum");
+
+			Label labPageNum = (Label) parent.lookup("#labPageNum"); // 리스트페이지 번호
 			labPageNum.setText("< " + listPageNum + " >");
+
 			Hyperlink hyLinkPre = (Hyperlink) parent.lookup("#hyLinkPre");
 			hyLinkPre.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
 				@Override
 				public void handle(MouseEvent event) {
 					if (listPageNum > 1) {
@@ -139,16 +142,15 @@ public class MainController implements Initializable {
 						ConnectionDAO cDAO = new ConnectionDAO();
 						ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO
 								.getUserDiaryList(userInfo.getUserid(), tableViewPreNextNum);
-						TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns()
-								.get(0);
+						TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(0);
 						tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
-						TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList
-								.getColumns().get(1);
+						TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(1);
 						tcListDate.setCellValueFactory(new PropertyValueFactory<Diary, String>("listDate"));
 						tableViewUserList.setItems(userDiaryList);
 					}
 				}
 			});
+
 			Hyperlink hyLinkNext = (Hyperlink) parent.lookup("#hyLinkNext");
 			hyLinkNext.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
@@ -161,11 +163,9 @@ public class MainController implements Initializable {
 						ConnectionDAO cDAO = new ConnectionDAO();
 						ObservableList<Diary> userDiaryList = (ObservableList<Diary>) cDAO
 								.getUserDiaryList(userInfo.getUserid(), tableViewPreNextNum);
-						TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns()
-								.get(0);
+						TableColumn<Diary, String> tcTitle = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(0);
 						tcTitle.setCellValueFactory(new PropertyValueFactory<Diary, String>("title"));
-						TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList
-								.getColumns().get(1);
+						TableColumn<Diary, String> tcListDate = (TableColumn<Diary, String>) tableViewUserList.getColumns().get(1);
 						tcListDate.setCellValueFactory(new PropertyValueFactory<Diary, String>("listDate"));
 						tableViewUserList.setItems(userDiaryList);
 					}
@@ -177,9 +177,9 @@ public class MainController implements Initializable {
 		} catch (IOException e1) {
 			messagePopup(1, "리스트를 불러올 수 없습니다. 관리자에게 문의하세요.");
 		}
-	}
+	}// end of userList()
 
-	public void upLoadDiary(ActionEvent e) {
+	public void upLoadDiary(ActionEvent e) { // 일기 업로드 및 수정
 		stop = true;
 		String title = txtFieldTitle.getText();
 		String content = txtAreaContent.getText();
@@ -207,21 +207,21 @@ public class MainController implements Initializable {
 					ConnectionDAO cDAO = new ConnectionDAO();
 					cDAO.updateUserDiary(userInfo.getUserid(), updateDiary);
 					messagePopup(3, "업로드 완료");
+
 					changeDate();
 					txtFieldTitle.setText(null);
 					txtAreaContent.setText(null);
 					updateDiary = null;
+
 				} catch (Exception e2) {
 					messagePopup(1, "업로드 실패 관리자에게 문의하세요.");
 				}
 			}
-
 		}
-	}
+	} // end of upLoadDiary()
 
 	public void changeDate() {
 		stop = false;
-
 		Thread thread = new Thread() {
 			@Override
 			public void run() {
@@ -232,15 +232,13 @@ public class MainController implements Initializable {
 					});
 					try {
 						Thread.sleep(50);
-					} catch (InterruptedException e) {
-					}
-
+					} catch (InterruptedException e) {}
 				}
 			};
 		};
 		thread.setDaemon(true);
 		thread.start();
-	}
+	} // changeDate()
 
 	public void messagePopup(int alert, String message) {
 		HBox hbox = new HBox();
@@ -268,14 +266,15 @@ public class MainController implements Initializable {
 		popup.getContent().add(hbox);
 		popup.setAutoHide(true);
 		popup.show(btnMyList.getScene().getWindow());
-	}
+	}// messagePopup
 
 	public void contextMenu(MouseEvent event) {
 		ContextMenu contextMenu = new ContextMenu();
-
+		MenuItem item0 = new MenuItem(tableViewUserList.getSelectionModel().selectedItemProperty().getValue().getTitle());
+		item0.setDisable(true);
+		
 		MenuItem item1 = new MenuItem("수정");
 		item1.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				if (tableViewUserList.getSelectionModel().selectedItemProperty().getValue() == null) {
@@ -290,7 +289,6 @@ public class MainController implements Initializable {
 					Stage listStage = (Stage) tableViewUserList.getScene().getWindow();
 					listStage.close();
 				}
-
 			}
 		});
 		MenuItem item2 = new MenuItem("삭제");
@@ -308,23 +306,19 @@ public class MainController implements Initializable {
 				}
 			}
 		});
-
 		MenuItem item3 = new MenuItem("뒤로가기");
 		item3.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				Stage listStage = (Stage) tableViewUserList.getScene().getWindow();
 				listStage.close();
-
 			}
 		});
-
-		contextMenu.getItems().addAll(item1, item2, item3);
+		contextMenu.getItems().addAll(item0, item1, item2, item3);
 		contextMenu.show(tableViewUserList.getScene().getWindow(), event.getScreenX(), event.getScreenY());
+	} // end of contextMenu()
 
-	}
 	public void myPage(MouseEvent event) {
-		
 		Stage myPage = new Stage(StageStyle.UTILITY);
 		myPage.initModality(Modality.WINDOW_MODAL);
 		myPage.initOwner(btnMyList.getScene().getWindow());
@@ -359,4 +353,19 @@ public class MainController implements Initializable {
 		ff.printStackTrace();
 	}
 	}
+=======
+
+			TextField mypageId = (TextField) parent.lookup("#mypageid");
+			TextField mypageName = (TextField) parent.lookup("#mypagename");
+			TextField mypageEmail = (TextField) parent.lookup("#mypageemail");
+
+			mypageId.setText(userInfo.getLoginid());
+			mypageName.setText(userInfo.getName());
+			mypageEmail.setText(userInfo.getEmail());
+
+		} catch (Exception e) {
+			messagePopup(1, "마이페이지를 열수없습니다. 관리자에게 문의하세요.");
+		}
+	}// end of myPage()
+>>>>>>> branch 'master' of https://github.com/youn1995/OneDayFamousSaying
 }
