@@ -9,9 +9,9 @@
 <AnchorPane id="mainAnchorPane" maxHeight="500.0"
 	maxWidth="300.0" minHeight="500.0" minWidth="300.0" prefHeight="500.0"
 	prefWidth="300.0" style="-fx-background-color: skyblue;"
-	stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8"
+	 xmlns="http://javafx.com/javafx/8"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="team.control.MainController">
+	fx:controller="team.control.MainController" stylesheets = "@/team/css/style.css">
 	<children>
 		<Hyperlink fx:id="hyLinkLogout" layoutX="247.0"
 			layoutY="-2.0" text="Logout">
@@ -33,13 +33,15 @@
 		<TextArea fx:id="txtAreaContent" layoutY="117.0"
 			prefHeight="349.0" prefWidth="300.0" promptText="Write Your Story" />
 		<Button fx:id="btnMyList" layoutX="1.0" layoutY="468.0"
-			mnemonicParsing="false" text="My List">
+			mnemonicParsing="false" style="-fx-background-radius: 30;"
+			text="My List">
 			<font>
 				<Font name="Segoe Script" size="12.0" />
 			</font>
 		</Button>
 		<Button fx:id="btnUpload" layoutX="237.0" layoutY="468.0"
-			mnemonicParsing="false" text="Upload">
+			mnemonicParsing="false" style="-fx-background-radius: 30;"
+			text="Upload">
 			<font>
 				<Font name="Segoe Script" size="12.0" />
 			</font>

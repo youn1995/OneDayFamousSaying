@@ -10,8 +10,6 @@ public class User
 	private SimpleStringProperty name;
 	private SimpleStringProperty email;
 	
-
-	
 	//user생성자
 	public User(int userid, String loginid, String name, String email)
 	{
@@ -21,8 +19,6 @@ public class User
 		this.email = new SimpleStringProperty(email);
 	}
 	
-	
-
 	//userid	
 	public int getUserid()
 	{
@@ -40,39 +36,32 @@ public class User
 	}
 	
 	//loginid
-	
 	public String getLoginid()
 	{
 		return this.loginid.get();
 	}
-
 	public void setLoginid(String loginid)
 	{
 		this.loginid.set(loginid);
 	}
-
 	public SimpleStringProperty loginidProperty()
 	{
 		return this.loginid;
 	}
-	
 	
 	//name
 	public String getName()
 	{
 		return this.name.get();
 	}
-
 	public void setname(String name)
 	{
 		this.name.set(name);
 	}
-
 	public SimpleStringProperty nameProperty()
 	{
 		return this.name;
 	}
-	
 	
 	//email
 	public String getEmail()
@@ -89,6 +78,4 @@ public class User
 	{
 		return this.email;
 	}
-	
-	
-}
+}//end of user Class

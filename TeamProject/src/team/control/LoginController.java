@@ -28,20 +28,19 @@ import team.data.User;
 
 public class LoginController implements Initializable
 {
-
 	@FXML
-	Button buttonSignin, buttonSignup, buttonCancel, buttonSignupComp;
+	private Button buttonSignin, buttonSignup, buttonCancel, buttonSignupComp;
 	@FXML
-	TextField textid;
+	private TextField textid;
 	@FXML
-	PasswordField  textPassword;
-
+	private PasswordField textPassword;
 	ConnectionDAO dao = new ConnectionDAO();
-	PreparedStatement prmt = null;
+	private Stage signupStage;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
 	{
+//로그인창 로그인버튼
 		buttonSignin.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
@@ -49,7 +48,6 @@ public class LoginController implements Initializable
 			{
 				buttonSigninAction(arg0);
 			}
-
 		});
 
 		buttonSignup.setOnAction(new EventHandler<ActionEvent>()
@@ -60,12 +58,12 @@ public class LoginController implements Initializable
 				buttonSignupAction(arg0);
 			}
 		});
-
 	}
 
+//로그인창 회원가입버튼
 	public void buttonSigninAction(ActionEvent aa)
 	{
-	
+
 		User userinfo = dao.login(textid.getText(), textPassword.getText());
 		if (userinfo == null)
 		{
@@ -76,49 +74,45 @@ public class LoginController implements Initializable
 		Stage nextStage = new Stage(StageStyle.UTILITY);
 		nextStage.initModality(Modality.WINDOW_MODAL);
 		nextStage.initOwner(buttonSignin.getScene().getWindow());
-
 		try
 		{
 			try
 			{
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/team/ui/Main.fxml"));
 				Parent parent = loader.load();
-
 				MainController mainController = loader.getController();
 				mainController.setUserInfo(userinfo);
-
 				Scene scene = new Scene(parent);
 				nextStage.setScene(scene);
 				nextStage.setResizable(false);
 				nextStage.show();
 				textid.setText(null);
 				textPassword.setText(null);
-				
-			} catch (IOException e)
+			} 
+			catch (IOException e)
 			{
-
 				e.printStackTrace();
 			}
-		} catch (NullPointerException e)
+		} 
+		catch (NullPointerException e)
 		{
 			e.printStackTrace();
 		}
-
-	}
-
+	}//end of buttonSigninAction
+//에러오류 다이얼로그창
 	public void messageDialog(String message)
 	{
 		Stage customStage = new Stage(StageStyle.UTILITY);
 		customStage.initModality(Modality.WINDOW_MODAL);
 		customStage.initOwner(buttonSignin.getScene().getWindow());
 		customStage.setTitle("오류");
-
+		
 		AnchorPane ap = new AnchorPane();
-		ap.setPrefSize(400, 150);
-
+		ap.setPrefSize(400, 70);
+		
 		Button button = new Button("확인");
-		button.setLayoutX(336);
-		button.setLayoutY(104);
+		button.setLayoutX(300);
+		button.setLayoutY(30);
 		button.setOnAction(e -> customStage.close());
 
 		Label label = new Label(message);
@@ -129,26 +123,27 @@ public class LoginController implements Initializable
 		Scene scene = new Scene(ap);
 		customStage.setScene(scene);
 		customStage.show();
-	}
-
+	}//end of messageDialog
+	
+//회원가입창 연결 및 회원가입창 회원가입버튼
 	public void buttonSignupAction(ActionEvent gg)
 	{
-		Stage addStage = new Stage(StageStyle.UTILITY);
-		addStage.initModality(Modality.WINDOW_MODAL);
-		addStage.initOwner(buttonSignup.getScene().getWindow());
+		signupStage = new Stage(StageStyle.UTILITY);
+		signupStage.initModality(Modality.WINDOW_MODAL);
+		signupStage.initOwner(buttonSignup.getScene().getWindow());
 		try
 		{
-			
 			Parent parent = FXMLLoader.load(getClass().getResource("/team/ui/Signup.fxml"));
 			Scene scene = new Scene(parent);
-			addStage.setScene(scene);
-			addStage.setResizable(false);
-			addStage.show();
+			signupStage.setScene(scene);
+			signupStage.setResizable(false);
+			signupStage.show();
 			TextField textSignId = (TextField) parent.lookup("#textSignId");
 			PasswordField textSignPassword = (PasswordField) parent.lookup("#textSignPassword");
 			TextField textName = (TextField) parent.lookup("#textName");
 			TextField textEmail = (TextField) parent.lookup("#textEmail");
 			Button buttonSignupComp = (Button) parent.lookup("#buttonSignupComp");
+			Button buttonCancel = (Button) parent.lookup("#buttonCancel");
 			buttonSignupComp.setOnAction(new EventHandler<ActionEvent>()
 			{
 				@Override
@@ -157,29 +152,36 @@ public class LoginController implements Initializable
 					if (textSignId.getText() == null || textSignId.getText().equals(""))
 					{
 						messageDialog("아이디를 입력하세요");
-					} else if (textSignPassword.getText() == null || textSignPassword.getText().equals(""))
+					} 
+					else if (textSignPassword.getText() == null || textSignPassword.getText().equals(""))
 					{
 						messageDialog("비밀번호를 입력하세요");
-					} else if (textName.getText() == null || textName.getText().equals(""))
+					} 
+					else if (textName.getText() == null || textName.getText().equals(""))
 					{
 						messageDialog("이름 입력하세요");
-					} else if (textEmail.getText() == null || textEmail.getText().equals(""))
+					} 
+					else if (textEmail.getText() == null || textEmail.getText().equals(""))
 					{
 						messageDialog("이메일을 입력하세요");
 					}
-					
-					dao.SignUp(textSignId.getText(), textName.getText(),textSignPassword.getText(),
+					dao.SignUp(textSignId.getText(), textName.getText(), textSignPassword.getText(),
 							textEmail.getText());
-					addStage.close();
+					signupStage.close();
 				}
 			});
-
+			buttonCancel.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0)
+				{
+					signupStage.close();
+				}
+				
+			});
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		
-	}
 
-
-}
+	}//end of buttonSignup Action
+}//end of class LoginController

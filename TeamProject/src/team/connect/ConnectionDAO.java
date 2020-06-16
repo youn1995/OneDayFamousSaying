@@ -25,7 +25,6 @@ public class ConnectionDAO {
 		String url = "jdbc:oracle:thin:@192.168.0.74:1521:xe";
 		try
 		{
-
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, "hr", "hr");
 		} catch (SQLException e) {
@@ -35,29 +34,29 @@ public class ConnectionDAO {
 		}
 		return conn;
 	}
-
+//로그인 id,password check , db비교 후 로그인
 	public User login(String loginid, String password) {
 		User userinfo = null;
 		try {
-
 			String sql = "select count(*) as CNT from diary_user where login_id ='" + loginid + "'"
 					+ " and user_password= '" + password + "'";
-
 			conn = getConnect();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				if (rs.getInt("CNT") == 0) {
+				if (rs.getInt("CNT") == 0) 
+				{
 					return null;
 				}
 			}
-			sql = "select *" + " from diary_user " + " where login_id ='" + loginid + "'" + " and user_password= '"
+			sql = "select * from diary_user where login_id ='" + loginid + "'" + " and user_password= '"
 					+ password + "'";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			if (rs.next()) 
+			{
 				User user = new User(rs.getInt("user_id"), rs.getString("login_id"), rs.getString("user_name"),
-						rs.getString("user_password"));
+						             rs.getString("user_password"));
 				userinfo = user;
 			}
 			return userinfo;
@@ -71,7 +70,7 @@ public class ConnectionDAO {
 		}
 	}
 
-
+//회원가입 insert
 	public void SignUp(String signid, String username, String userpassword, String email)
 	{
 
@@ -84,16 +83,13 @@ public class ConnectionDAO {
 													+ "'%s',"
 													+ " '%s',"
 													+ " '%s')", signid, username, userpassword, email);
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.executeUpdate();
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-
 	}
-
 
 	// 유저다이어리 목록 호출
 	public ObservableList<Diary> getUserDiaryList(int userId, int startNum) {

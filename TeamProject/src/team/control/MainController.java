@@ -338,11 +338,20 @@ public class MainController implements Initializable {
 			TextField mypageid = (TextField) parent.lookup("#mypageid");
 			TextField mypagename = (TextField) parent.lookup("#mypagename");
 			TextField mypageemail = (TextField) parent.lookup("#mypageemail");
-			
+			Button ok = (Button) parent.lookup("#ok");
 			mypageid.setText(userInfo.getLoginid());
 			mypagename.setText(userInfo.getName());
 			mypageemail.setText(userInfo.getEmail());
 			
+			ok.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event)
+				{
+					myPage.close();
+				}
+				
+			});
 			
 		
 			

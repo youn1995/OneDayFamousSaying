@@ -1,3 +1,24 @@
+
 #pane{
--fx-background-image:url('/team/images/moo.png')
+	-fx-background-image :url('/team/images/pngwing1.com.png');
+	-fx-background-position:center;
+	-fx-background-size: 100% 100%;
+	
 }
+#list{
+	-fx-background-image :url('/team/images/pngwing2.com.png');
+	-fx-background-size: 100% 100%;
+}
+#mypage{
+	-fx-background-image :url('/team/images/pngwing3.com.png');
+	-fx-background-size: 100% 100%;
+}
+#signup{
+	-fx-background-image :url('/team/images/pngwing4.com.png');
+	-fx-background-size: 100% 100%;
+}
+#mainAnchorPane{
+	-fx-background-image :url('/team/images/pngwing5.com.png');
+	-fx-background-size: 100% 100%;
+}
+
