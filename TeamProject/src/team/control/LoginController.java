@@ -111,12 +111,14 @@ public class LoginController implements Initializable
 		ap.setPrefSize(400, 70);
 		
 		Button button = new Button("확인");
-		button.setLayoutX(300);
+		button.setLayoutX(340);
 		button.setLayoutY(30);
 		button.setOnAction(e -> customStage.close());
 
 		Label label = new Label(message);
-
+		label.setLayoutX(105);
+		label.setLayoutY(20);
+		
 		ap.getChildren().add(button);
 		ap.getChildren().add(label);
 
